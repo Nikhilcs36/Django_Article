@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-def home(request):
-    return HttpResponse('<h1>hi its me nikhil cool</h1>')
+def blog_home(request):
+    return render(request, 'main/blog_home.html')
 
-def about(request):
-    return HttpResponse("about us page  ")
+def blog_detail(request):
+    return render(request, 'main/blog_detail.html')
+    
+def profile(request):
+    return render(request, 'main/profile.html')
+    
