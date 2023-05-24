@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+      <div class="container">
+        <div class="row">
+          {% for data in blogs %}
+            <div class="col-sm-4 mt-1">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{ data.name }}</h5>
+                  <small>auther : </small>
+                  <small class="text-primary">{{data.auther}}</small>
+                  <p class="card-text">{{data.description|truncatechars:100}}</p>
+                  <a href="{% url 'blog_detail' %}" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+      </div>
+{% endblock content %}
+  
