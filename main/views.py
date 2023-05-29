@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Blog, BlogComment, Contact
+from .forms import ContactForm
 
 def blog_home(request):
     all_blogs = Blog.objects.all()
@@ -22,19 +23,28 @@ def profile(request):
     return render(request, 'profile.html')
 
 def contact_us(request):
+    #----- fetching data from html form-----------
+    
+    # if request.method == "POST":
+    #     name = request.POST['name']
+    #     email = request.POST['email']
+    #     phone_number = request.POST['phone_number']
+    #     message = request.POST['message']
+        
+    #     if len(name)<2 or len(email)<5 or len(phone_number)<9 or len(message)<2 :
+    #         return redirect('home')
+    #     else:
+    #         save_data = Contact(name=name,email=email,phone_number=phone_number,message=message)
+    #         save_data.save()
+    #         return redirect('contact_us')
+    
+    form = ContactForm()
     if request.method == "POST":
-        name = request.POST['name']
-        email = request.POST['email']
-        phone_number = request.POST['phone_number']
-        message = request.POST['message']
-        
-        if len(name)<2 or len(email)<5 or len(phone_number)<9 or len(message)<2 :
-            return redirect('home')
-        else:
-            save_data = Contact(name=name,email=email,phone_number=phone_number,message=message)
-            save_data.save()
-            return redirect('contact_us')
-        
-    return render(request, 'contact_us.html')
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = ContactForm()
+    return render(request, "contact_us.html", {"form": form})
 
     

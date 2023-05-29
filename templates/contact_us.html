@@ -6,7 +6,7 @@
 <h2>Contact to DE Blog</h2>
 <form class="row g-3" method="post">
     {% csrf_token %}
-    <div class="col-md-6">
+    {% comment %} <div class="col-md-6">
         <label for="fname" class="form-label">First name</label>
         <input type="text" class="force-control" id="fname" placeholder="name" name="name">
         {{form.name}}
@@ -26,6 +26,8 @@
     </div>
     <div class="col-12">
         <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
+    </div> {% endcomment %}
+    {{form.as_table}}
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 {% endblock content %}
