@@ -6,28 +6,31 @@
 <h2>Contact to DE Blog</h2>
 <form class="row g-3" method="post">
     {% csrf_token %}
-    {% comment %} <div class="col-md-6">
+    <div class="col-md-6">
         <label for="fname" class="form-label">First name</label>
-        <input type="text" class="force-control" id="fname" placeholder="name" name="name">
+        {% comment %} <input type="text" class="force-control" id="fname" placeholder="name" name="name"> {% endcomment %}
         {{form.name}}
     </div>
     <div class="col-md-6">
         <label for="emailid" class="form-label" name="email">Email</label>
-        <input type="email" class="force-control" id="emailid" placeholder="email" name="email">
+        {% comment %} <input type="email" class="force-control" id="emailid" placeholder="email" name="email"> {% endcomment %}
         {{form.email}}
     </div>
     <div class="col-md-6">
         <label for="phone" class="form-label" name="phone_number">Phone Number</label>
-        <input type="Number" class="force-control" id="phone" placeholder="Phone Number" name="phone_number">
+        {% comment %} <input type="Number" class="force-control" id="phone" placeholder="Phone Number" name="phone_number"> {% endcomment %}
         {{form.phone_number}}
     </div>
     <div class="col-12">
-        <textarea class="form-control" name="message" id="" cols="30" rows="5"></textarea> 
+        {% comment %} <textarea class="form-control" name="message" id="" cols="30" rows="5"></textarea>  {% endcomment %}
+        {{form.message}}
     </div>
     <div class="col-12">
         <button type="submit" class="btn btn-primary">Submit</button>
-    </div> {% endcomment %}
-    {{form.as_table}}
-    <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+    
+    {% comment %} {{form.as_table}} {% endcomment %}
+    {% comment %} <button type="submit" class="btn btn-primary">Submit</button> {% endcomment %}
 </form>
 {% endblock content %}
