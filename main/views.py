@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Blog, BlogComment, Contact
 from .forms import ContactForm
+from django.contrib import messages
 
 def blog_home(request):
     all_blogs = Blog.objects.all()
@@ -43,8 +44,10 @@ def contact_us(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-    else:
-        form = ContactForm()
+            messages.success(request, "submit successfully")
+        else:
+            # form = ContactForm()
+            messages.error(request, "filll the details properly")
     return render(request, "contact_us.html", {"form": form})
 
     
