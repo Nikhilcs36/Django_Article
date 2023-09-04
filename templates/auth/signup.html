@@ -2,4 +2,37 @@
 
 {% block content %}
 <h1>signup</h1>
+
+<form method="post">
+{% csrf_token %}
+<div class="row">
+        <div class="col-md-6">
+          <label for="fname" class="form-label">First Name</label>
+          {{form.first_name}}
+        </div>
+        <div class="col-md-6">
+          <label for="lname" class="form-label">Last Name</label>
+          {{form.last_name}}
+        </div>
+        <div class="col-6">
+          <label for="username" class="form-label">Username</label>
+          {{form.username}}
+        </div>
+        <div class="col-6">
+          <label for="email" class="form-label">Email</label>
+          {{form.email}}
+        </div>
+        <div class="col-6">
+            <label for="Password" class="form-label">Password</label>
+            {{form.password1}}
+          </div>
+          <div class="col-6">
+            <label for="confirmpassword" class="form-label">Confirm Password</label>
+            {{form.password2}}
+          </div>
+        <div class="col-6"><br>
+          <button type="submit" class="btn btn-primary">Create User</button>
+        </div>
+</div>
+</form>
 {% endblock content %}
