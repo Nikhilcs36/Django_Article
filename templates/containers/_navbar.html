@@ -27,6 +27,12 @@
         </form> {% endcomment %}
       </div>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">{{user.username}}</a>
+        </li>
+
+        {% else %}
         <li class="nav-item">
           <a {% if request.path == "/login/" %}
           class="nav-link active"
@@ -41,6 +47,7 @@
           class="nav-link"
           {% endif %} href="{% url 'signup' %}">signup</a>
         </li>
+        {% endif %}
       </ul>
     </div>
   </nav>
