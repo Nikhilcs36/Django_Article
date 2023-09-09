@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'main',
     'authors',
     'fontawesomefree',  # add manully 
+    'django.contrib.humanize',  # add manully 
 ]
 
 MIDDLEWARE = [

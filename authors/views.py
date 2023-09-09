@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from .forms import SignupForm, LoginUserForm
 from django.contrib.auth import authenticate, login, logout
+from main.models import Blog
 
 def signup(request):
     if request.method == "POST":
@@ -47,4 +48,11 @@ def user_logout(request):
     logout(request)
     messages.success(request,"you have successfully logout")
     return redirect('home')
+
+def profile(request, user_name):
+    user_related_data = Blog.objects.filter(auther__username = user_name)
+    context = {
+       "user_related_data":user_related_data 
+    }
+    return render(request, "auth/profile.html", context)
     

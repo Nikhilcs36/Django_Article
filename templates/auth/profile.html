@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="card border-success mb-3">
+    <div class="card-header bg-transparent border-success">{{user.username}} profile</div>
+    <div class="card-body">
+        <!--check username-->
+        {% if user.username %}
+        <h5 class="card-title">username : {{user.username}}</h5>
+        {% else %}
+        <div class="alert alert-warning" role="alert">
+            <b>username</b> is not provided by user
+          </div>
+        {% endif %}
+
+          <!--check first name-->
+        {% if user.first_name %}
+        <h5 class="card-title">first name : {{user.first_name}}</h5>
+        {% else %}
+        <div class="alert alert-warning" role="alert">
+            <b>first name</b> is not provided by user
+          </div>
+        {% endif %}
+
+          <!--check last name-->
+          {% if user.last_name %}
+          <h5 class="card-title">last name : {{user.last_name}}</h5>
+          {% else %}
+          <div class="alert alert-warning" role="alert">
+              <b>last name</b> is not provided by user
+            </div>
+          {% endif %}
+
+          <!--check email-->
+          {% if user.email %}
+          <h5 class="card-title">last name : {{user.email}}</h5>
+          {% else %}
+          <div class="alert alert-warning" role="alert">
+              <b>email</b> is not provided by user
+            </div>
+          {% endif %}
+      <p class="card-text"></p>
+    </div>
+    <div class="card-footer bg-transparent border-success">
+        <a class="btn btn-sm btn-primary" href="#">change password</a>
+        <a class="btn btn-sm btn-info" href="#">edit profile</a>
+        <a class="btn btn-sm btn-danger" href="#">delete account</a>
+    </div>
+  </div>
+
+  <hr>
+
+  <h3>my post</h3>
+
+  {% for post_data in user_related_data %}
+  <div class="card">
+    
+    <div class="card-body">
+      <blockquote class="blockquote mb-0">
+        <div class="row">
+            <div class="col md-6">
+                <p>{{post_data.name}}</p>
+            </div>
+            <div class="col md-6">
+                <p class="text-end">{{post_data.post_date | timesince}}</p>
+            </div>
+        </div>
+        <footer class="blockquote-footer">{{post_data.description | truncatewords:20}}</footer>
+      </blockquote>
+    </div>
+    <div class="card-footer">
+        <a class="btn btn-sm btn-primary" href="">read more</a>
+        <a class="btn btn-sm btn-info" href="">edit blog</a>
+        <a class="btn btn-sm btn-danger " href="">delete blog</a>
+      </div>
+  </div>
+  {% endfor %}
+
+{% endblock content %}
+
