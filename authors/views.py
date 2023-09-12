@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
-from .forms import SignupForm, LoginUserForm
+from .forms import SignupForm, LoginUserForm, PasswordChangingForm
 from django.contrib.auth import authenticate, login, logout
 from main.models import Blog
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
 
 def signup(request):
     if request.method == "POST":
@@ -56,3 +58,10 @@ def profile(request, user_name):
     }
     return render(request, "auth/profile.html", context)
     
+
+class PasswordChageView(PasswordChangeView):
+    form_class = PasswordChangingForm
+    success_url = reverse_lazy('password-success')
+    
+def password_success(request):
+    return render(request, "auth/password_change_success.html")
