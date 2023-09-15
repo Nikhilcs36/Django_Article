@@ -10,7 +10,9 @@ urlpatterns = [
     # path('login/', views.user_login, name="login"),
     path('login/', views.UserLogin.as_view(), name="login"),
     
-    path('logout/', views.user_logout, name="logout"),
+    # path('logout/', views.user_logout, name="logout"),
+    path('logout/', views.UserLogout.as_view(), name="logout"),
+    
     path('change_password/', views.PasswordChageView.as_view(template_name = "auth/password_change.html"),
     name="change-password"),
     path('password_success/', views.password_success, name="password-success"),

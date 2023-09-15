@@ -84,10 +84,16 @@ class UserLogin(generic.View):
         
     
 
-def user_logout(request):
-    logout(request)
-    messages.success(request,"you have successfully logout")
-    return redirect('home')
+# def user_logout(request):
+#     logout(request)
+#     messages.success(request,"you have successfully logout")
+#     return redirect('home')
+
+class UserLogout(generic.View):
+    def get(self, request):
+        logout(request)
+        return redirect('home')
+        
 
 def profile(request, user_name):
     user_related_data = Blog.objects.filter(auther__username = user_name)
