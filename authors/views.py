@@ -10,44 +10,79 @@ from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 from django.views import generic
 
-def signup(request):
-    if request.method == "POST":
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Your account was created successfully.")
-            new_user = authenticate(
-                username = form.cleaned_data['username'],
-                password = form.cleaned_data['password1'],
-            )
-            login(request, new_user)
-            return redirect('home')
-        else:
-            messages.error(request, "Error")
-    else:
-        form = SignupForm()
-    return render(request, "auth/signup.html", {'form': form})
+# def signup(request):
+#     if request.method == "POST":
+#         form = SignupForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, "Your account was created successfully.")
+#             new_user = authenticate(
+#                 username = form.cleaned_data['username'],
+#                 password = form.cleaned_data['password1'],
+#             )
+#             login(request, new_user)
+#             return redirect('home')
+#         else:
+#             messages.error(request, "Error")
+#     else:
+#         form = SignupForm()
+#     return render(request, "auth/signup.html", {'form': form})
+
+class SignUp(generic.CreateView):
+    form_class = SignupForm
+    template_name = "auth/signup.html"
+    success_url = reverse_lazy("login")
         
 
-def user_login(request):
-    if request.method == "POST":
-        form = LoginUserForm(request, data = request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
+# def user_login(request):
+    # if request.method == "POST":
+    #     form = LoginUserForm(request, data = request.POST)
+    #     if form.is_valid():
+    #         username = form.cleaned_data.get('username')
+    #         password = form.cleaned_data.get('password')
             
-            user = authenticate(username = username , password = password)
+    #         user = authenticate(username = username , password = password)
             
-            if user is not None:
-                login(request, user)
-                messages.success(request, f"you are logged in as {username}")
-                return redirect('home')
+    #         if user is not None:
+    #             login(request, user)
+    #             messages.success(request, f"you are logged in as {username}")
+    #             return redirect('home')
+    #         else:
+    #             messages.error(request, "Error")
+    #     else:
+    #         messages.error(request, "username or password is incorrect")
+    # form = LoginUserForm()  
+    # return render(request, "auth/login.html", {"login_form":form})
+
+class UserLogin(generic.View):
+    form_class = LoginUserForm
+    template_name = "auth/login.html"
+    
+    def get(self, request):
+        form = self.form_class
+        return render(request, self.template_name, {'form':form})
+    
+    def post(self, request):
+        if request.method == "POST":
+            form = LoginUserForm(request, data = request.POST)
+            if form.is_valid():
+                username = form.cleaned_data.get('username')
+                password = form.cleaned_data.get('password')
+                
+                user = authenticate(username = username , password = password)
+                
+                if user is not None:
+                    login(request, user)
+                    messages.success(request, f"you are logged in as {username}")
+                    return redirect('home')
+                else:
+                    messages.error(request, "Error")
             else:
-                messages.error(request, "Error")
-        else:
-            messages.error(request, "username or password is incorrect")
-    form = LoginUserForm()  
-    return render(request, "auth/login.html", {"login_form":form})
+                messages.error(request, "username or password is incorrect")
+        form = LoginUserForm()  
+        return render(request, "auth/login.html", {'form':form})
+        
+    
 
 def user_logout(request):
     logout(request)

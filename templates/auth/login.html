@@ -8,11 +8,13 @@
     <div class="row">
         <div class="col-6">
           <label for="username" class="form-label">Username</label>
-          {{login_form.username}}
+          {% comment %} {{login_form.username}} {% endcomment %}
+          {{form.username}}
         </div>
         <div class="col-6">
             <label for="Password" class="form-label">Password</label>
-            {{login_form.password}}
+            {% comment %} {{login_form.password}} {% endcomment %}
+            {{form.password}}
           </div>
         <div class="col-6"><br>
           <button type="submit" class="btn btn-primary">login</button>
