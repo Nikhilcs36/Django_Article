@@ -35,6 +35,9 @@ class Contact(models.Model):
     message = models.TextField()
     time = models.DateTimeField(auto_now_add=True, blank=True)
     
+    def __str__(self):
+        return str(self.name)
+    
     
 
 

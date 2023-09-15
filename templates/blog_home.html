@@ -5,7 +5,8 @@
 <h1 class="red_color">blog home</h1>
       <div class="container">
         <div class="row">
-          {% for data in blogs %}
+          {% comment %} {% for data in blogs %} {% endcomment %}
+          {% for data in object_list %}
             <div class="col-sm-4 mt-1">
               <div class="card">
                 <div class="card-body">

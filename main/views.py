@@ -3,27 +3,36 @@ from django.http import HttpResponse
 from .models import Blog, BlogComment, Contact
 from .forms import ContactForm
 from django.contrib import messages
+from django.views import generic
 
-def blog_home(request):
-    all_blogs = Blog.objects.all()
-    context = {
-        'blogs': all_blogs
-    }
-    return render(request, 'blog_home.html', context)
+#--------function based view------------
+# def blog_home(request):
+#     all_blogs = Blog.objects.all()
+#     context = {
+#         'blogs': all_blogs
+#     }
+#     return render(request, 'blog_home.html', context)
 
-def blog_detail(request, slug_url):
-    blog = Blog.objects.get(slug=slug_url)
-    all_blogs = Blog.objects.all().order_by('post_date')[:5] # for indexing 5 items only
-    context ={
-        'blog':blog,
-        'all_blogs': all_blogs,
-    }
-    return render(request, 'blog_detail.html', context)
+#---------class based view------------
+class BlogHome(generic.ListView):
+    model=Blog
+    template_name = "blog_home.html"
     
-def profile(request):
-    return render(request, 'profile.html')
 
-def contact_us(request):
+# def blog_detail(request, slug_url):
+#     blog = Blog.objects.get(slug=slug_url)
+#     all_blogs = Blog.objects.all().order_by('post_date')[:5] # for indexing 5 items only
+#     context ={
+#         'blog':blog,
+#         'all_blogs': all_blogs,
+#     }
+#     return render(request, 'blog_detail.html', context)
+    
+class BlogDetail(generic.DetailView):
+    model=Blog
+    template_name = "blog_detail.html"
+
+# def contact_us(request):
     #----- fetching data from html form-----------
     
     # if request.method == "POST":
@@ -39,15 +48,21 @@ def contact_us(request):
     #         save_data.save()
     #         return redirect('contact_us')
     
-    form = ContactForm()
-    if request.method == "POST":
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "submit successfully")
-        else:
-            # form = ContactForm()
-            messages.error(request, "filll the details properly")
-    return render(request, "contact_us.html", {"form": form})
+    
+    # form = ContactForm()
+    # if request.method == "POST":
+    #     form = ContactForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         messages.success(request, "submit successfully")
+    #     else:
+    #         # form = ContactForm()
+    #         messages.error(request, "filll the details properly")
+    # return render(request, "contact_us.html", {"form": form})
+    
+class ContactUs(generic.CreateView):
+    form_class = ContactForm
+    template_name = "contact_us.html"
+    success_url = "/"
 
     
