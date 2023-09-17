@@ -11,6 +11,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # def signup(request):
 #     if request.method == "POST":
@@ -96,7 +97,8 @@ class UserLogin(generic.View):
 #     messages.success(request,"you have successfully logout")
 #     return redirect('home')
 
-class UserLogout(generic.View):
+class UserLogout(LoginRequiredMixin, generic.View):
+    login_url = 'login'
     def get(self, request):
         logout(request)
         messages.success(request,"User logged out")
@@ -110,8 +112,9 @@ class UserLogout(generic.View):
 #     }
 #     return render(request, "auth/profile.html", context)
 
-class Profile(generic.View):
+class Profile(LoginRequiredMixin, generic.View):
     model = Blog
+    login_url = 'login'
     template_name = "auth/profile.html"
     
     def get(self, request, user_name):
@@ -122,16 +125,18 @@ class Profile(generic.View):
         return render(request, self.template_name, context)
         
     
-
-class PasswordChageView(PasswordChangeView):
+class PasswordChageView(LoginRequiredMixin, PasswordChangeView):
     form_class = PasswordChangingForm
+    login_url = 'login'
     success_url = reverse_lazy('password-success')
     
 def password_success(request):
     return render(request, "auth/password_change_success.html")
 
-class UpdateUserView(generic.UpdateView):
+
+class UpdateUserView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     form_class = EditUserProfileForm
+    login_url = 'login'
     template_name = "auth/edit_user_profile.html"
     success_url = reverse_lazy('home')
     success_message = "User updated"
@@ -144,8 +149,9 @@ class UpdateUserView(generic.UpdateView):
         return redirect('home')
     
 
-class DeleteUser(SuccessMessageMixin, generic.DeleteView):
+class DeleteUser(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView):
     model = User
+    login_url = 'login' #for Restrict user "login_url" and "LoginRequiredMixin"
     template_name = "auth/delete_user_confirm.html"
     success_message = "User has been deleted"
     success_url = reverse_lazy('home')
