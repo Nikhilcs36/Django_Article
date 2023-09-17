@@ -9,6 +9,7 @@ from main.models import Blog
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 from django.views import generic
+from django.contrib.messages.views import SuccessMessageMixin
 
 # def signup(request):
 #     if request.method == "POST":
@@ -28,10 +29,15 @@ from django.views import generic
 #         form = SignupForm()
 #     return render(request, "auth/signup.html", {'form': form})
 
-class SignUp(generic.CreateView):
+class SignUp(SuccessMessageMixin, generic.CreateView):
     form_class = SignupForm
     template_name = "auth/signup.html"
     success_url = reverse_lazy("login")
+    success_message = "User has been created, please login with your username and password"
+    
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, "please enter data properly")
+        return redirect('signup')
         
 
 # def user_login(request):
@@ -92,6 +98,7 @@ class UserLogin(generic.View):
 class UserLogout(generic.View):
     def get(self, request):
         logout(request)
+        messages.success(request,"User logged out")
         return redirect('home')
         
 
@@ -126,6 +133,11 @@ class UpdateUserView(generic.UpdateView):
     form_class = EditUserProfileForm
     template_name = "auth/edit_user_profile.html"
     success_url = reverse_lazy('home')
+    success_message = "User updated"
     
     def get_object(self):
         return self.request.user
+    
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, "please enter data carefully")
+        return redirect('home')
