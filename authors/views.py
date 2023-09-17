@@ -95,12 +95,24 @@ class UserLogout(generic.View):
         return redirect('home')
         
 
-def profile(request, user_name):
-    user_related_data = Blog.objects.filter(auther__username = user_name)
-    context = {
-       "user_related_data":user_related_data 
-    }
-    return render(request, "auth/profile.html", context)
+# def profile(request, user_name):
+#     user_related_data = Blog.objects.filter(auther__username = user_name)
+#     context = {
+#        "user_related_data":user_related_data 
+#     }
+#     return render(request, "auth/profile.html", context)
+
+class Profile(generic.View):
+    model = Blog
+    template_name = "auth/profile.html"
+    
+    def get(self, request, user_name):
+        user_related_data = Blog.objects.filter(auther__username = user_name)
+        context = {
+        "user_related_data":user_related_data 
+        }
+        return render(request, self.template_name, context)
+        
     
 
 class PasswordChageView(PasswordChangeView):
