@@ -11,7 +11,11 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User
+#--------Restrict urls in class based views------
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+#--------Restrict urls in class based views------
+from django.contrib.auth.decorators import login_required
 
 # def signup(request):
 #     if request.method == "POST":
@@ -104,7 +108,7 @@ class UserLogout(LoginRequiredMixin, generic.View):
         messages.success(request,"User logged out")
         return redirect('home')
         
-
+# @login_required(login_url= 'login')
 # def profile(request, user_name):
 #     user_related_data = Blog.objects.filter(auther__username = user_name)
 #     context = {
