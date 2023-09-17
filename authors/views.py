@@ -10,6 +10,7 @@ from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.models import User
 
 # def signup(request):
 #     if request.method == "POST":
@@ -141,3 +142,10 @@ class UpdateUserView(generic.UpdateView):
     def form_invalid(self, form):
         messages.add_message(self.request, messages.ERROR, "please enter data carefully")
         return redirect('home')
+    
+
+class DeleteUser(SuccessMessageMixin, generic.DeleteView):
+    model = User
+    template_name = "auth/delete_user_confirm.html"
+    success_message = "User has been deleted"
+    success_url = reverse_lazy('home')
