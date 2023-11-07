@@ -14,7 +14,7 @@ from django.contrib.auth.models import User
 #--------Restrict urls in class based views------
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-#--------Restrict urls in class based views------
+#--------Restrict urls in function based views------
 from django.contrib.auth.decorators import login_required
 
 # def signup(request):

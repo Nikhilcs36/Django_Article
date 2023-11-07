@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contact
+from .models import Contact, Blog
 
 class ContactForm(forms.ModelForm):
     class Meta:
@@ -15,4 +15,12 @@ class ContactForm(forms.ModelForm):
             "message": forms.Textarea(attrs={'class':'form-control', 'placeholder':'enter message'}),
         }
         
+
+class CreatedBlogForm(forms.ModelForm):
+    class Meta:
+        model = Blog
+        exclude = ('post_date','slug')
+        widgets = {
+            'auther': forms.TextInput(attrs={'value': '', 'id':'author', 'type':'hidden'})
+        }
         

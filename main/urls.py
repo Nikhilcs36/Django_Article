@@ -11,4 +11,6 @@ urlpatterns = [
     # path('contact_us/', views.contact_us, name="contact_us"),
     path('contact_us/', views.ContactUs.as_view(), name="contact_us"),
     
+    path('create_new_blog/', views.CreateBlog.as_view(), name="create-blog")
+    
 ]

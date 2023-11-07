@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Blog, BlogComment, Contact
-from .forms import ContactForm
+from .forms import ContactForm, CreatedBlogForm
 from django.contrib import messages
 from django.views import generic
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 #--------function based view------------
 # def blog_home(request):
@@ -70,5 +71,12 @@ class ContactUs(SuccessMessageMixin, generic.CreateView):
     def form_invalid(self, form):
         messages.add_message(self.request, messages.ERROR, "please submit the form carefully")
         return redirect('home')
+    
 
+class CreateBlog(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+    login_url = 'login'
+    form_class = CreatedBlogForm
+    template_name = "create_blog.html"
+    success_url = "/"
+    success_message = "your blog has been created"
     
