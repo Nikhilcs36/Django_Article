@@ -26,4 +26,15 @@ class CreatedBlogForm(forms.ModelForm):
             'auther': forms.TextInput(attrs={'value': '', 'id':'author', 'type':'hidden'}),
             'mini_description': forms.Textarea(attrs={'class':'form-control'}),
         }
+  
+        
+class UpdateBlogForm(forms.ModelForm):
+    description = forms.CharField(widget=CKEditorWidget())
+    class Meta:
+        model = Blog
+        exclude = ('post_date','slug')
+        widgets = {
+            'auther': forms.TextInput(attrs={'value': '', 'id':'author', 'type':'hidden'}),
+            'mini_description': forms.Textarea(attrs={'class':'form-control'}),
+        }
         

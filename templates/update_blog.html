@@ -1,13 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 <form method="post">
     {% csrf_token %}
-    {{ form.media }}
+    {{form.media}}
     {{form.as_p}}
-    <button type="submit" class="btn btn-success">Post Blog</button>
 
+    <button type="submit" class="btn btn-success">Update Blog</button>
 </form>
 
 <!--for get current user when author field is hidden-->
@@ -17,4 +16,3 @@
 </script>
 
 {% endblock content %}
-

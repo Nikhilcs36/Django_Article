@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Blog, BlogComment, Contact
-from .forms import ContactForm, CreatedBlogForm
+from .forms import ContactForm, CreatedBlogForm, UpdateBlogForm
 from django.contrib import messages
 from django.views import generic
 from django.contrib.messages.views import SuccessMessageMixin
@@ -77,6 +77,14 @@ class CreateBlog(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     login_url = 'login'
     form_class = CreatedBlogForm
     template_name = "create_blog.html"
+    success_url = "/"
+    success_message = "your blog has been created"
+    
+class UpdateBlogView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
+    model = Blog
+    form_class = UpdateBlogForm
+    template_name = "update_blog.html"
+    login_url = 'login'
     success_url = "/"
     success_message = "your blog has been created"
     
