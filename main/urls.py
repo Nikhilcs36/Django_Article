@@ -13,5 +13,6 @@ urlpatterns = [
     
     path('create_new_blog/', views.CreateBlog.as_view(), name="create-blog"),
     path('update_blog/<int:pk>/', views.UpdateBlogView.as_view(), name="updateblogview"),
+    path('delete_blog/<int:pk>/', views.DeleteBlogView.as_view(), name="deleteblogview"),
     
 ]

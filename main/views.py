@@ -88,3 +88,11 @@ class UpdateBlogView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView
     success_url = "/"
     success_message = "your blog has been created"
     
+class DeleteBlogView(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView):
+    model = Blog
+    template_name = "delete_blog.html"
+    login_url = 'login'
+    success_url = "/"
+    success_message = "your blog has been deleted"
+    
+    
