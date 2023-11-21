@@ -27,11 +27,20 @@
     </div>
     <div class="col-md-4 my-1">
       <ul class="list-group">
+        <h2>user created blogs</h2>
+        {% for blogs in user_blogs %}
+        <li class="list-group-item">
+          <a href="{% url 'blog_detail' blogs.slug %}" class="text-decoration-none">{{blogs.name}}</a>
+          </li>
+        {% endfor %}
+        <br>
+        <h2>all blogs</h2>
         {% for blogs in all_blogs %}
         <li class="list-group-item">
           <a href="{% url 'blog_detail' blogs.slug %}" class="text-decoration-none">{{blogs.name}}</a>
           </li>
         {% endfor %}
+
       </ul>
     </div>
   </div>

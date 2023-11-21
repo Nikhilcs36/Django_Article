@@ -33,6 +33,20 @@ class BlogHome(generic.ListView):
 class BlogDetail(generic.DetailView):
     model=Blog
     template_name = "blog_detail.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        all_blogs = Blog.objects.all().order_by('post_date')[:10]
+        context['all_blogs'] = all_blogs
+        
+        # Get the blogs authored by the user
+        user = self.request.user
+        user_blogs = Blog.objects.filter(auther=user)
+        context['user_blogs'] = user_blogs
+        
+        return context
+    
 
 # def contact_us(request):
     #----- fetching data from html form-----------
